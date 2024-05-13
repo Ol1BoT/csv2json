@@ -3,53 +3,30 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"io"
-	"os"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	path := flag.String("path", "", "Path of CSV File")
-	flag.Parse()
-
-	data, err := readAndParseCsv(*path)
-	if err != nil {
-		panic(fmt.Sprintf("error while handling csv file: %s\n", err))
-	}
-
-	json, err := csvToJson(data)
-	if err != nil {
-		panic(fmt.Sprintf("error while converting csv to json file: %s\n", err))
-	}
-	fmt.Println(json)
-}
-
-func readAndParseCsv(path string) ([][]string, error) {
-	csvFile, err := os.Open(path)
-	if err != nil {
-		return nil, fmt.Errorf("error opening %s\n", path)
-	}
+func CSVToJSON(r io.Reader) (string, error) {
 
 	var rows [][]string
 
-	reader := csv.NewReader(csvFile)
+	reader := csv.NewReader(r)
 	for {
 		row, err := reader.Read()
 		if err == io.EOF {
 			break
 		}
-
 		if err != nil {
-			return rows, fmt.Errorf("failed to parse csv: %s", err)
+			return "", fmt.Errorf("failed to parse csv: %s", err)
 		}
-
 		rows = append(rows, row)
 	}
 
-	return rows, nil
+	return csvToJson(rows)
+
 }
 
 func csvToJson(rows [][]string) (string, error) {
@@ -114,3 +91,4 @@ func arrayContentMatch(str string) (string, int) {
 	}
 	return str, -1
 }
+

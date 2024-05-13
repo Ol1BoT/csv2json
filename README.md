@@ -1,4 +1,7 @@
 # CSV2JSON
+
+forked from [github.com/adi20raj/CSV2JSON](https://github.com/adi20raj/CSV2JSON)
+
 Convert CSV to automatically nested JSON in Golang.
 
 This project transforms CSV to JSON without struct and allows recreating nested object using delimiters. <br/>
