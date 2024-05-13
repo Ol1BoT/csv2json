@@ -1,4 +1,4 @@
-package main
+package csv2json
 
 import (
 	"encoding/csv"
@@ -26,7 +26,6 @@ func CSVToJSON(r io.Reader) (string, error) {
 	}
 
 	return csvToJson(rows)
-
 }
 
 func csvToJson(rows [][]string) (string, error) {
@@ -91,4 +90,3 @@ func arrayContentMatch(str string) (string, int) {
 	}
 	return str, -1
 }
-
